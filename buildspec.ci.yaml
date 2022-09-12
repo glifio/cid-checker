@@ -13,7 +13,6 @@ env:
 phases:
   install:
     commands:
-      - export BUILD_VERSION=$(git describe --always)
       - echo Environment Variables
       - printenv
   pre_build:
