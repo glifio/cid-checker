@@ -19,10 +19,7 @@ phases:
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
     commands:
-      - echo Checking format STARTED
-      - cat ./release.yaml | cut -d ':' -f2
-      - cat release.yaml | cut -d ':' -f2
-      - GET_RELEASE_TAG=$(cut -d ':' -f2 release.yaml)
+      - export GET_RELEASE_TAG=$(cat ./release.yaml | cut -d ':' -f2)
   build:
     commands:
       - echo Build STARTED
