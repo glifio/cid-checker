@@ -24,4 +24,4 @@ phases:
   build:
     commands:
       - echo Build STARTED
-      - docker build -t ${IMAGE_NAME}:${GET_RELEASE_TAG} .
+      - docker build -t cid-checker:${GET_RELEASE_TAG} .
