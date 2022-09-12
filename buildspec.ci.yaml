@@ -21,7 +21,7 @@ phases:
   pre_build:
     commands:
       - export GET_BUILD_RELEASE_TAG=$(cat ./release.yaml | cut -d ':' -f2)
-      - docker build -t cid-checker:${GET_BUILD_RELEASE_TAG} .
+      - docker build -t cid-checker:$(echo $GET_BUILD_RELEASE_TAG) .
   build:
     commands:
       - echo Build STARTED
