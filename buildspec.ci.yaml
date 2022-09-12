@@ -20,6 +20,8 @@ phases:
   pre_build:
     commands:
       - echo Checking format STARTED
+      - cat ./release.yaml | cut -d ':' -f2
+      - cat release.yaml | cut -d ':' -f2
       - GET_RELEASE_TAG=$(cut -d ':' -f2 release.yaml)
   build:
     commands:
