@@ -21,7 +21,7 @@ phases:
   pre_build:
     commands:
       - echo Build STARTED
-      - docker build -t cid-checker:$(echo $BUILD_VERSION) .
+      - docker build -t $IMAGE_NAME:$(echo $BUILD_VERSION) .
   build:
     commands:
       - echo Image built
