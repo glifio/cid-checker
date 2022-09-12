@@ -12,16 +12,21 @@ env:
 phases:
   install:
     commands:
-      - export BUILD_VERSION=$(git describe --always)
       - echo Environment Variables
-      - printenv
+      - export BUILD_VERSION=$(cat ./release.yaml | cut -d ':' -f2)
+      #      - printenv
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
   pre_build:
     commands:
-      - echo Checking format STARTED
+      - echo Build STARTED
+      - docker build -t cid-checker:$(echo $BUILD_VERSION) .
   build:
     commands:
+      - echo Image built
       - echo Build STARTED
-      - docker build -t ${IMAGE_NAME}:0.1.${CODEBUILD_BUILD_NUMBER} .
-      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
       - docker tag ${IMAGE_NAME}:0.1.${CODEBUILD_BUILD_NUMBER} ${CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT}-${ENVIRONMENT}-${SHORT_REGION}-${SUB_ENV}-${IMAGE_NAME}:0.1.${CODEBUILD_BUILD_NUMBER}
       - docker push ${CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT}-${ENVIRONMENT}-${SHORT_REGION}-${SUB_ENV}-${IMAGE_NAME}:0.1.${CODEBUILD_BUILD_NUMBER}

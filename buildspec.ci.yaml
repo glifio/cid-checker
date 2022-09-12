@@ -14,14 +14,14 @@ phases:
   install:
     commands:
       - echo Environment Variables
-      - export GET_BUILD_RELEASE_TAG=$(cat ./release.yaml | cut -d ':' -f2)
+      - export BUILD_VERSION=$(cat ./release.yaml | cut -d ':' -f2)
 #      - printenv
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
     commands:
       - echo Build STARTED
-      - docker build -t cid-checker:$(echo $GET_BUILD_RELEASE_TAG) .
+      - docker build -t cid-checker:$(echo $BUILD_VERSION) .
   build:
     commands:
       - echo Image built
