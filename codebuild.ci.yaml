@@ -1,0 +1,26 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buildspec file.
+version: 0.2
+
+env:
+  variables:
+    IMAGE_NAME: 'cid-checker'
+    PROJECT: 'filecoin'
+    ENVIRONMENT: 'mainnet'
+    SUB_ENV: 'glif'
+    SHORT_REGION: 'apn1'
+
+
+phases:
+  install:
+    commands:
+      - export BUILD_VERSION=$(git describe --always)
+      - echo Environment Variables
+      - printenv
+  pre_build:
+    commands:
+      - echo Checking format STARTED
+      - GET_RELEASE_TAG=$(cut -d ':' -f2 release.yaml)
+  build:
+    commands:
+      - echo Build STARTED
+      - docker build -t ${IMAGE_NAME}:${GET_RELEASE_TAG} .

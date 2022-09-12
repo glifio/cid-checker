@@ -1,0 +1,27 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buildspec file.
+version: 0.2
+
+env:
+  variables:
+    IMAGE_NAME: 'cid-checker'
+    PROJECT: 'filecoin'
+    ENVIRONMENT: 'mainnet'
+    SUB_ENV: 'glif'
+    SHORT_REGION: 'apn1'
+
+phases:
+  install:
+    commands:
+      - export BUILD_VERSION=$(git describe --always)
+      - echo Environment Variables
+      - printenv
+  pre_build:
+    commands:
+      - echo Checking format STARTED
+  build:
+    commands:
+      - echo Build STARTED
+      - docker build -t ${IMAGE_NAME}:0.1.${CODEBUILD_BUILD_NUMBER} .
+      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+      - docker tag ${IMAGE_NAME}:0.1.${CODEBUILD_BUILD_NUMBER} ${CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT}-${ENVIRONMENT}-${SHORT_REGION}-${SUB_ENV}-${IMAGE_NAME}:0.1.${CODEBUILD_BUILD_NUMBER}
+      - docker push ${CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT}-${ENVIRONMENT}-${SHORT_REGION}-${SUB_ENV}-${IMAGE_NAME}:0.1.${CODEBUILD_BUILD_NUMBER}
