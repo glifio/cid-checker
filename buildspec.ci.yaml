@@ -20,8 +20,8 @@ phases:
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
     commands:
-      - pre_build
+      - docker build -t cid-checker:$GET_RELEASE_TAG .
   build:
     commands:
       - echo Build STARTED
-      - docker build -t cid-checker:$GET_RELEASE_TAG .
+      - docker images
