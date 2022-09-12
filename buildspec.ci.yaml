@@ -20,6 +20,7 @@ phases:
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
     commands:
+      - export GET_BUILD_RELEASE_TAG=$(cat ./release.yaml | cut -d ':' -f2)
       - docker build -t cid-checker:${GET_BUILD_RELEASE_TAG} .
   build:
     commands:
