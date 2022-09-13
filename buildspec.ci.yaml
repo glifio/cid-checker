@@ -24,4 +24,4 @@ phases:
       - docker build -t $IMAGE_NAME:$(echo $BUILD_VERSION) .
   build:
     commands:
-      - echo Image  built
+      - echo Image built
