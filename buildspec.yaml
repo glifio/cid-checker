@@ -23,11 +23,11 @@ phases:
   pre_build:
     commands:
       - echo Build STARTED
-#      - echo $BUILD_IMAGE_VERSION_TAG
-      - docker build -t $IMAGE_NAME:$BUILD_IMAGE_VERSION_TAG .
+      - docker build -t $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG) .
   build:
     commands:
       - echo Image built
       - echo Build STARTED
 
       - docker tag $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG) $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-$IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-$IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
