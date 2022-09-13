@@ -17,6 +17,17 @@ phases:
       #      - printenv
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+
+
+
+
+      - apk update
+      - apk upgrade
+      - apk add python3 py3-pip curl
+      - pip install awscli
+      - curl -Lks https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator -o /usr/local/bin/aws-iam-authenticator
+      - chmod +x /usr/local/bin/aws-iam-authenticator
+
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 
