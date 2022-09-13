@@ -29,7 +29,7 @@ phases:
     commands:
       - echo Build STARTED
       # This logic validates release version until push to the main branch.
-      - IS_NEW_RELEASE=$(git diff --name-only $CODEBUILD_SOURCE_VERSION main | grep release.yaml)
+      - IS_NEW_RELEASE=$(git diff --name-only $CODEBUILD_WEBHOOK_PREV_COMMIT main | grep release.yaml)
       - if [ -z "$(echo $IS_NEW_RELEASE)" ]; then exit 1; fi
 
       - docker build -t $IMAGE_NAME:latest .
