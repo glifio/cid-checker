@@ -9,6 +9,7 @@ env:
     SUB_ENV: 'glif'
     SHORT_REGION: 'apn1'
     AWS_ACCOUNT_ID: '499623857295'
+    DOCKERUHUB_ORGANIZATION: 'protofire'
 
 phases:
   install:
@@ -20,7 +21,8 @@ phases:
   pre_build:
     commands:
       - echo Build STARTED
-      - docker build -t $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG) .
+      - docker build -t $IMAGE_NAME:latest .
+      - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
   build:
     commands:
       - echo Image built

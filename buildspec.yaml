@@ -19,6 +19,7 @@ phases:
     commands:
       - echo Environment Variables
       - BUILD_IMAGE_VERSION_TAG=$(cat ./release.yaml | cut -d ':' -f2)
+
       - printenv
 
       - echo Logging in to Amazon ECR...
