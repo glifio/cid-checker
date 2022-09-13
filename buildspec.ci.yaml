@@ -8,20 +8,19 @@ env:
     ENVIRONMENT: 'mainnet'
     SUB_ENV: 'glif'
     SHORT_REGION: 'apn1'
-
+    AWS_ACCOUNT_ID: '499623857295'
 
 phases:
   install:
     commands:
       - echo Environment Variables
-      - export BUILD_VERSION=$(cat ./release.yaml | cut -d ':' -f2)
-#      - printenv
-      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
-      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+      - BUILD_IMAGE_VERSION_TAG=$(cat ./release.yaml | cut -d ':' -f2)
+      - printenv
+
   pre_build:
     commands:
       - echo Build STARTED
-      - docker build -t $IMAGE_NAME:$(echo $BUILD_VERSION) .
+      - docker build -t $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG) .
   build:
     commands:
       - echo Image built

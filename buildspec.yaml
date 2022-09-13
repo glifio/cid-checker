@@ -9,6 +9,9 @@ env:
     SUB_ENV: 'glif'
     SHORT_REGION: 'apn1'
     AWS_ACCOUNT_ID: '499623857295'
+  secrets-manager:
+    DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
+    DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
 
 phases:
   install:
@@ -23,11 +26,15 @@ phases:
   pre_build:
     commands:
       - echo Build STARTED
-      - docker build -t $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG) .
+#      - docker build -t $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG) .
+      - docker build -t $IMAGE_NAME:latest .
+      - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
   build:
     commands:
       - echo Image built
       - echo Build STARTED
 
       - docker tag $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG) $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-$IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-$IMAGE_NAME:latest
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-$IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
+      - echo $DOCKERHUB_USERNAME
