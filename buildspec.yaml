@@ -23,8 +23,8 @@ phases:
   pre_build:
     commands:
       - echo Build STARTED
-      - echo $BUILD_IMAGE_VERSION_TAG
-      - docker build -t $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG) .
+#      - echo $BUILD_IMAGE_VERSION_TAG
+      - docker build -t $IMAGE_NAME:$$BUILD_IMAGE_VERSION_TAG .
   build:
     commands:
       - echo Image built
