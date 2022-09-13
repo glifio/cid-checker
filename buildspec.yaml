@@ -28,9 +28,9 @@ phases:
   pre_build:
     commands:
       - echo Build STARTED
-      # This logic validates release version until push to the main branch.
-      - IS_NEW_RELEASE=$(git diff --name-only HEAD~1 HEAD | grep release.yaml)
-      - if [ -z "$(echo $IS_NEW_RELEASE)" ]; then echo "RELEASE VERSION DID NOT UPDATED" && exit 1; fi
+#      # This logic validates release version until push to the main branch.
+#      - IS_NEW_RELEASE=$(git diff --name-only HEAD~1 HEAD | grep release.yaml)
+#      - if [ -z "$(echo $IS_NEW_RELEASE)" ]; then echo "RELEASE VERSION DID NOT UPDATED" && exit 1; fi
 
       - docker build -t $IMAGE_NAME:latest .
       - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
