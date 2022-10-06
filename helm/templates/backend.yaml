@@ -48,8 +48,12 @@ spec:
           env:
             - name: PORT
               value: "3000"
+            - name: CID_LOTUS_RPC_URL
+              value: "{{ .Values.lotusURL }}"
             - name: CID_DB_CONNECTIONSTRING
               value: "mongodb://{{ include "CID.fullname" . }}-mongo-service:27017"
+            - name: CID_DB_NAME
+              value: "{{ .Values.services.mongo.dbName }}"
             - name: CID_DATABASE_USER
               valueFrom:
                 secretKeyRef:

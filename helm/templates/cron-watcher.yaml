@@ -1,0 +1,66 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "CID.fullname" . }}-watcher 
+  labels:
+    {{- include "CID.labels" . | nindent 4 }}
+    component: watcher  
+spec:
+  concurrencyPolicy: "Replace" 
+  failedJobsHistoryLimit: 1 
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "CID.labels" . | nindent 12 }}
+            component: watcher
+        spec:
+          containers:
+          - image: "{{ .Values.services.watcher.image.repository }}:{{ .Values.services.watcher.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: {{ .Values.services.watcher.image.pullPolicy }} 
+            name: {{ include "CID.fullname" . }}-watcher
+            env:
+            - name: CID_LOTUS_RPC_URL
+              value: "{{ .Values.lotusURL }}"
+            - name: CID_DB_NAME
+              value: "{{ .Values.services.mongo.dbName }}"
+            - name: CID_DB_CONNECTIONSTRING
+              value: "mongodb://{{ include "CID.fullname" . }}-mongo-service:27017"
+            - name: CID_DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "CID.fullname" . }}-db-secret
+                  key: dbUsername
+                  optional: false
+            - name: CID_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "CID.fullname" . }}-db-secret
+                  key: dbPassword
+                  optional: false
+      {{- range $key, $value := .Values.services.watcher.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+      {{- end }}
+         {{- with $job.nodeSelector }}
+          nodeSelector:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with $job.affinity }}
+          affinity:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with $job.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          restartPolicy: {{ $job.restartPolicy }}
+          {{- with $job.volumes }}
+          volumes:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+  schedule: "{{ .Values.services.watcher.schedule }}"
+  successfulJobsHistoryLimit: 2
+{{- end }}
