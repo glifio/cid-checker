@@ -21,7 +21,7 @@ phases:
   pre_build:
     commands:
       - echo Build STARTED
-      - docker build -t $IMAGE_NAME:latest .
+      - docker build -t $IMAGE_NAME:latest . -f Dockerfile.watcher
       - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
   build:
     commands:
