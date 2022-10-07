@@ -10,7 +10,7 @@ phases:
   pre_build:
     commands:
       - echo Build STARTED
-      - make build_docker_all 
+      - make docker_build_all 
   build:
     commands:
       - echo Image built
