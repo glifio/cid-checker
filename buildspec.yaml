@@ -4,10 +4,8 @@ version: 0.2
 env:
   variables:
     PROJECT: 'filecoin'
-    ENVIRONMENT: 'dev'
     SUB_ENV: 'glif'
     SHORT_REGION: 'apn1'
-    AWS_ACCOUNT_ID: '499623857295'
     DOCKERHUB_ORGANIZATION: 'protofire'
     KUBECTL_VERSION: 1.24.3
     HELM_VERSION: 3.1.0
