@@ -1,5 +1,5 @@
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ include "CID.fullname" . }}-watcher 
@@ -11,14 +11,15 @@ spec:
   failedJobsHistoryLimit: 1 
   jobTemplate:
     spec:
+      backoffLimit: 2
+      ttlSecondsAfterFinished: 10
       template:
-        backoffLimit: 2
-        ttlSecondsAfterFinished: 10
         metadata:
           labels:
             {{- include "CID.labels" . | nindent 12 }}
             component: watcher
         spec:
+          restartPolicy: Never
           containers:
           - image: "{{ .Values.services.watcher.image.repository }}:{{ .Values.services.watcher.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: {{ .Values.services.watcher.image.pullPolicy }} 
@@ -46,23 +47,17 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
       {{- end }}
-         {{- with $job.nodeSelector }}
+         {{- with .Values.nodeSelector }}
           nodeSelector:
 {{ toYaml . | indent 12 }}
           {{- end }}
-          {{- with $job.affinity }}
+          {{- with .Values.affinity }}
           affinity:
 {{ toYaml . | indent 12 }}
           {{- end }}
-          {{- with $job.tolerations }}
+          {{- with .Values.tolerations }}
           tolerations:
-{{ toYaml . | indent 12 }}
-          {{- end }}
-          restartPolicy: {{ $job.restartPolicy }}
-          {{- with $job.volumes }}
-          volumes:
 {{ toYaml . | indent 12 }}
           {{- end }}
   schedule: "{{ .Values.services.watcher.schedule }}"
   successfulJobsHistoryLimit: 2
-{{- end }}
