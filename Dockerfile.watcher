@@ -9,8 +9,8 @@ ENV fcnode=https://endpoint_url_to_rpc.io
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
 
-COPY source/ .
+COPY packages/watcher-scripts/ .
 RUN npm i
-RUN chmod +x script.sh
+RUN chmod +x ProcessMarketDeals.sh
 
-CMD ["./script.sh"]
+CMD ["./ProcessMarketDeals.sh"]
