@@ -12,3 +12,5 @@ If the file does not change, the Build will fail with exit code 1.
 Also, CD push image to two repositories where one is DockerHub and it is publicly available.
 
 URL for DockerHub repository: [https://hub.docker.com/r/protofire/cid-checker](https://hub.docker.com/r/protofire/cid-checker)
+
+
