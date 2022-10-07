@@ -12,6 +12,8 @@ spec:
   jobTemplate:
     spec:
       template:
+        backoffLimit: 2
+        ttlSecondsAfterFinished: 10
         metadata:
           labels:
             {{- include "CID.labels" . | nindent 12 }}
