@@ -29,9 +29,9 @@ phases:
       - echo Logging to AWS eks
       - aws eks --region $AWS_REGION update-kubeconfig --name $PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-eks
       - echo Installing Helm
-      - curl -o helm https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz
-      - chmod +x ./helm
-      - mv helm /usr/bin
+      - curl -o helm-binary https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz
+      - chmod +x ./helm-binary
+      - mv helm-binary /usr/bin/helm
 
   pre_build:
     commands:
