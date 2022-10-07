@@ -25,7 +25,7 @@ spec:
             imagePullPolicy: {{ .Values.services.watcher.image.pullPolicy }} 
             name: {{ include "CID.fullname" . }}-watcher
             env:
-            - name: CID_LOTUS_RPC_URL
+            - name: CID_LOTUS_RPCURL
               value: "{{ .Values.lotusURL }}"
             - name: CID_DB_NAME
               value: "{{ .Values.services.mongo.dbName }}"

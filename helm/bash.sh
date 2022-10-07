@@ -1,0 +1,4 @@
+prefix='m'
+CID_DB_CONNECTIONSTRING='mongoda'
+mongoURL=mongodb://${CID_DATABASE_USER}:${CID_DATABASE_PASSWORD}@${CID_DB_CONNECTIONSTRING#"$prefix"}
+echo $mongoURL
