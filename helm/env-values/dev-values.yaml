@@ -1,2 +1,1 @@
-lotusURL: "https://calibration.node.glif.io/archive/lotus/rpc/v0"
-environment: "production"
+lotusURL: "http://calibrationapi-archive-node-lotus-service.network:1234/rpc/v0"

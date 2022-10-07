@@ -22,6 +22,7 @@ services:
       tag: 0.1.3-backend
       pullPolicy: IfNotPresent
     env:
+      NODE_ENV: "production"
       HEIGHT_ALARM_ALLOW_DIFF: "60"
   # Overrides the image tag whose default is the chart appVersion.
   mongo:

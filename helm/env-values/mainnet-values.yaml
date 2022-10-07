@@ -1,2 +1,1 @@
-lotusURL: "https://node.glif.ioi/space06/lotus/rpc/v0"
-environment: "production"
+lotusURL: "http://space06-lotus-service.network:1234/rpc/v0" 
