@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "CID.fullname" . }}-backend
+  name: {{ include "CID.fullname" . }}-backend-service
   labels:
     {{- include "CID.labels" . | nindent 4 }}
 spec:
