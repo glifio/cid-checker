@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # Prerequisites:
 # node v14, v16
 # npm i mongodb [https://www.npmjs.com/package/mongodb] (^v4.9.1)
