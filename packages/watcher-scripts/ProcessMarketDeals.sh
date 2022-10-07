@@ -6,13 +6,16 @@ set -eou pipefail;
 
 sdate="$(date +%s)"
 
-CID_LOTUS_RPCURL=https://calibration.node.glif.io/archive/lotus/rpc/v0
+DEFAULT_LOTUS_RPC="https://calibration.node.glif.io/archive/lotus/rpc/v0"
+DEFAULT_DB_NAME="filecoindb"
+
+CID_LOTUS_RPCURL="${CID_LOTUS_RPCURL:-$DEFAULT_LOTUS_RPC}"
 filePath=StateMarketDeals.json
 
 # Example: mongodb://login:pass@localhost:27017
 prefix='mongodb://'
 mongoURL=mongodb://${CID_DATABASE_USER}:${CID_DATABASE_PASSWORD}@${CID_DB_CONNECTIONSTRING#"$prefix"}
-CID_DB_NAME=filecoindb
+CID_DB_NAME="${CID_DB_NAME:-$DEFAULT_DB_NAME}"
 
 printf '[%s] Started processing state market deals\n' "$(date +%d-%m-%Y:%H:%M:%S)"
 currentHeight=$(curl -s -H "Content-Type:application/json"\
