@@ -8,19 +8,19 @@ services:
     image:
       repository: protofire/cid-checker
       tag: 0.1.3-watcher
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
   frontend:
     replicaCount: 1
     image:
       repository: protofire/cid-checker
       tag: 0.1.3-frontend
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
   backend:
     replicaCount: 1
     image:
       repository: protofire/cid-checker
       tag: 0.1.3-backend
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     env:
       NODE_ENV: "production"
       HEIGHT_ALARM_ALLOW_DIFF: "60"
