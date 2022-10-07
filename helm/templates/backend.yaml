@@ -38,11 +38,13 @@ spec:
               containerPort: 3000
               protocol: TCP
           livenessProbe:
-            tcpSocket:
-              port: 3000
+            httpGet:
+              path: /docs
+              port: api
           readinessProbe:
-            tcpSocket:
-              port: 3000
+            httpGet:
+              path: /docs
+              port: api
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
