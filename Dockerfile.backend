@@ -2,12 +2,12 @@ FROM node:14-alpine
 
 WORKDIR /app/
 
-COPY ./package.json .
-COPY ./packages/backend/config ./packages/backend
-COPY ./packages/backend/src ./packages/backend
-COPY ./packages/backend/index.js ./packages/backend/package.json ./packages/backend
-COPY ./packages/shared/package.json ./packages/shared
-COPY ./packages/shared/src .
+COPY ./package.json ./
+COPY ./packages/backend/config ./packages/backend/
+COPY ./packages/backend/src ./packages/backend/
+COPY ./packages/backend/index.js ./packages/backend/package.json ./packages/backend/
+COPY ./packages/shared/package.json ./packages/shared/
+COPY ./packages/shared/src ./
 
 EXPOSE 3000
 
