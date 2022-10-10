@@ -47,4 +47,4 @@ phases:
       - docker push $DOCKERHUB_ORGANIZATION/$DOCKERHUB_REPO_NAME:$APP_VERSION-backend
       - docker push $DOCKERHUB_ORGANIZATION/$DOCKERHUB_REPO_NAME:$APP_VERSION-watcher
       - cd helm
-      - helm upgrade --install cid-checker . -f env-values/$NETWORK.yaml
+      - helm upgrade --install cid-checker-$NETWORK . -f env-values/$NETWORK.yaml
