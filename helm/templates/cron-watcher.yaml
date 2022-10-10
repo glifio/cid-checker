@@ -34,13 +34,13 @@ spec:
             - name: CID_DATABASE_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "CID.fullname" . }}-db-secret
+                  name: {{ include "CID.fullname" . }}-secret
                   key: dbUsername
                   optional: false
             - name: CID_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "CID.fullname" . }}-db-secret
+                  name: {{ include "CID.fullname" . }}-secret
                   key: dbPassword
                   optional: false
       {{- range $key, $value := .Values.services.watcher.env }}

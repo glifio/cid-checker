@@ -31,13 +31,13 @@ spec:
           - name: MONGO_INITDB_ROOT_USERNAME 
             valueFrom:
               secretKeyRef:
-                name: {{ include "CID.fullname" . }}-db-secret
+                name: {{ include "CID.fullname" . }}-secret
                 key: dbUsername
                 optional: false
           - name: MONGO_INITDB_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ include "CID.fullname" . }}-db-secret
+                name: {{ include "CID.fullname" . }}-secret
                 key: dbPassword
                 optional: false
         livenessProbe:
