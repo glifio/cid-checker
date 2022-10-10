@@ -30,7 +30,6 @@ services:
       repository: mongo
       tag: 5.0.4
       pullPolicy: IfNotPresent
-    volumeSize: 30
     dbName: filecoindbspace06
 
 imagePullSecrets: []
