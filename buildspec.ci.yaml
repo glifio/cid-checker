@@ -1,28 +1,16 @@
 # Do not change version. This is the version of aws buildspec, not the version of your buildspec file.
 version: 0.2
 
-env:
-  variables:
-    IMAGE_NAME: 'cid-checker'
-    PROJECT: 'filecoin'
-    ENVIRONMENT: 'mainnet'
-    SUB_ENV: 'glif'
-    SHORT_REGION: 'apn1'
-    AWS_ACCOUNT_ID: '499623857295'
-    DOCKERUHUB_ORGANIZATION: 'protofire'
-
 phases:
   install:
     commands:
       - echo Environment Variables
-      - BUILD_IMAGE_VERSION_TAG=$(cat ./release.yaml | cut -d ':' -f2)
       - printenv
 
   pre_build:
     commands:
       - echo Build STARTED
-      - docker build -t $IMAGE_NAME:latest .
-      - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$(echo $BUILD_IMAGE_VERSION_TAG)
+      - make docker_build_all 
   build:
     commands:
       - echo Image built

@@ -1,0 +1,41 @@
+{
+  "name": "filecoin-CID-checker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:protofire/filecoin-CID-checker.git",
+  "author": "aliaksandr <plcgi1@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "docker-compose up -d",
+    "stop": "docker-compose stop",
+
+    "start:dev": "docker-compose --force-recreate -f ./docker-compose-local.yaml up",
+
+    "start:mongo:dc": "docker-compose start mongo",
+    "stop:mongo:dc": "docker-compose stop mongo",
+
+    "start:api": "yarn workspace cid-checker-fastify-api start",
+    "start:api:dc": "docker-compose start cid-checker-api",
+    "stop:api:dc": "docker-compose stop cid-checker-api",
+
+    "start:watcher": "yarn workspace cid-checker-watcher start",
+    "start:watcher:dc": "docker-compose start cid-checker-watcher",
+    "stop:watcher:dc": "docker-compose stop cid-checker-watcher",
+
+    "start:ui": "yarn workspace cid-checker-ui start",
+    "start:ui:dc": "docker-compose start cid-checker-frontend",
+    "stop:ui:dc": "docker-compose stop cid-checker-frontend",
+
+    "start:caddy:dc": "docker-compose start caddy",
+    "stop:caddy:dc": "docker-compose stop caddy",
+
+    "dc:build": "docker-compose build --force-rm",
+    "dc:build:ui": "docker-compose build --force-rm cid-checker-frontend",
+    "dc:build:api": "docker-compose build --force-rm cid-checker-api",
+    "dc:build:watcher": "docker-compose build --force-rm cid-checker-watcher"
+  }
+}
