@@ -21,7 +21,7 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - image: "{{ .Values.services.watcher.image.repository }}:{{ .Values.services.watcher.image.tag | default .Chart.AppVersion }}"
+          - image: "{{ .Values.services.watcher.image.repository }}:{{ .Chart.Version }}-watcher"
             imagePullPolicy: {{ .Values.services.watcher.image.pullPolicy }} 
             name: {{ include "CID.fullname" . }}-watcher
             env:
