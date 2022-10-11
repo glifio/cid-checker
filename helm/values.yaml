@@ -7,19 +7,19 @@ services:
     schedule: "*/20 * * * *"
     image:
       repository: protofire/cid-checker
-      tag: 0.1.5-watcher
+      tag: 0.1.6-watcher
       pullPolicy: Always
   frontend:
     replicaCount: 1
     image:
       repository: protofire/cid-checker
-      tag: 0.1.5-frontend
+      tag: 0.1.6-frontend
       pullPolicy: Always
   backend:
     replicaCount: 1
     image:
       repository: protofire/cid-checker
-      tag: 0.1.5-backend
+      tag: 0.1.6-backend
       pullPolicy: Always
     env:
       NODE_ENV: "production"

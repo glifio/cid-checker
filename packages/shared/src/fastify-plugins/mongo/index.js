@@ -21,11 +21,11 @@ const init = async (app, config, done) => {
     });
 
     mongoose.connection.on("disconnected", () => {
-      app.log.error({ actor: "MongoDB" }, "disconnected");
+      app.log.error({ actor: "MongoDB", uri: securedUri, name: config.db.options.dbName }, "disconnected");
       done()
     });
     mongoose.connection.on("error", (err) => {
-      app.log.error({ actor: "MongoDB", error: err }, "mongo error");
+      app.log.error({ actor: "MongoDB", error: err, uri: securedUri, name: config.db.options.dbName }, "mongo error");
       done(err)
     });
     // if (dbConfig.options && dbConfig.options.tls) {
