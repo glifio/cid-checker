@@ -2,17 +2,14 @@
 version: 0.2
 
 env:
-  shell: bash
   variables:
-    PROJECT: 'filecoin'
-    SUB_ENV: 'glif'
     SHORT_REGION: 'apn1'
-    ENVIRONMENT: 'dev'
     DOCKERHUB_ORGANIZATION: 'protofire'
     HELM_VERSION: 'v3.1.0'
     DOCKERHUB_REPO_NAME: 'cid-checker'
     APP_VERSION: '0.1.3'
     NETWORK: 'calibration'
+    KUBECTL_VERSION: 1.24.3
   secrets-manager:
     DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
     DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
@@ -24,9 +21,10 @@ phases:
     commands:
       - echo Environment Variables
       - printenv
-      - echo Logging to AWS eks
+      - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/${KUBECTL_VERSION}/2021-07-05/bin/linux/amd64/kubectl
+      - chmod +x ./kubectl
+      - mv kubectl /usr/bin/
       - aws eks --region $AWS_REGION update-kubeconfig --name $PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-eks
-      - echo Installing Helm
       - wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz
       - tar -xzvf helm-${HELM_VERSION}-linux-amd64.tar.gz
       - chmod +x ./linux-amd64/helm
@@ -38,7 +36,7 @@ phases:
       - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
   build:
     commands:
-      - echo Building docker images
+      - kubectl get ns
       - make docker_build_all
       - docker tag cid-checker-frontend:latest $DOCKERHUB_ORGANIZATION/$DOCKERHUB_REPO_NAME:$APP_VERSION-frontend
       - docker tag cid-checker-api:latest $DOCKERHUB_ORGANIZATION/$DOCKERHUB_REPO_NAME:$APP_VERSION-backend
