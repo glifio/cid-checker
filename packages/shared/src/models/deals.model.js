@@ -21,7 +21,6 @@ const schema = {
     ProviderCollateral: { type: String },
     ClientCollateral: { type: String }
   }
-
 }
 const DealsSchema = new Schema(schema, { _id: false });
 
@@ -34,5 +33,4 @@ DealsSchema.index({
   'State.SectorStartEpoch' : 1,
   _id : -1
 })
-
 module.exports = mongoose.model('Deals', DealsSchema);
