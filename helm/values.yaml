@@ -23,7 +23,7 @@ services:
       pullPolicy: Always
     env:
       NODE_ENV: "production"
-      HEIGHT_ALARM_ALLOW_DIFF: "60"
+      HEIGHT_ALARM_ALLOW_DIFF: "120"
   # Overrides the image tag whose default is the chart appVersion.
   mongo:
     image:
