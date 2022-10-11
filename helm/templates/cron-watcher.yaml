@@ -31,18 +31,6 @@ spec:
               value: "{{ .Values.services.mongo.dbName }}"
             - name: CID_DB_CONNECTIONSTRING
               value: "mongodb://{{ include "CID.fullname" . }}-mongo-service:27017"
-            - name: CID_DATABASE_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "CID.fullname" . }}-secret
-                  key: dbUsername
-                  optional: false
-            - name: CID_DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "CID.fullname" . }}-secret
-                  key: dbPassword
-                  optional: false
       {{- range $key, $value := .Values.services.watcher.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
