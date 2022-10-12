@@ -33,6 +33,10 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.services.backend.image.repository }}:{{ .Chart.Version }}-backend"
           imagePullPolicy: {{ .Values.services.backend.image.pullPolicy }}
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "yarn run migrate:production"]
           ports:
             - name: api
               containerPort: 3000
