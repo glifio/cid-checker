@@ -22,17 +22,14 @@ const init = async (app, config, done) => {
 
     mongoose.connection.on("disconnected", () => {
       app.log.error({ actor: "MongoDB", uri: securedUri, name: config.db.options.dbName }, "disconnected");
-      done()
+      // done()
     });
     mongoose.connection.on("error", (err) => {
       app.log.error({ actor: "MongoDB", error: err, uri: securedUri, name: config.db.options.dbName }, "mongo error");
-      done(err)
+      // done(err)
+      throw err
     });
-    // if (dbConfig.options && dbConfig.options.tls) {
-    //   if (!dbConfig.options.tlsCAFile) {
-    //     throw new Error('tls=true required tlsCAFile path to cert file')
-    //   }
-    // }
+
     await mongoose.connect(
       uri,
       {
@@ -50,9 +47,10 @@ const init = async (app, config, done) => {
     })
 
     app.decorate('db', { models })
-    done()
+    // done()
   } catch (err) {
-    done(err)
+    // done(err)
+    throw err
   }
 }
 
