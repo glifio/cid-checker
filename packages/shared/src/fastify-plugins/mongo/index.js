@@ -9,7 +9,6 @@ const createModels = (path) => {
 const init = async (app, config, done) => {
   const models = await createModels(config.modelsPath)
   try {
-    // await connect(app, config.db, models, done)
     const uri = `${config.db.uri}`
 
     const securedUri = uri.replace(/(.+):(.+)@/,'***:***@')
