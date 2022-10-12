@@ -47,5 +47,5 @@ phases:
       - docker push $DOCKERHUB_ORGANIZATION/$DOCKERHUB_REPO_NAME:$APP_VERSION-backend
       - docker push $DOCKERHUB_ORGANIZATION/$DOCKERHUB_REPO_NAME:$APP_VERSION-watcher
       - cd helm
-      - sed -i "s/0.1.6/$APP_VERSION/g" Chart.yaml
+      - sed -i "s/0.1.6/${APP_VERSION}/g" Chart.yaml
       - helm upgrade --install cid-checker-$NETWORK . -f env-values/$NETWORK.yaml
