@@ -37,6 +37,9 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          env:
+            - name: REACT_APP_REPOSITORY_URL
+              value: "https://github.com/glifio/cid-checker"
           livenessProbe:
             httpGet:
               path: /

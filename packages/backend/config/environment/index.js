@@ -25,6 +25,7 @@ const dbOptions = {
   uri: env.CID_DB_CONNECTIONSTRING,
   options: {
     dbName: env.CID_DB_NAME,
+    autoIndex: false,
     auth: {
       user: env.CID_DATABASE_USER,
       password: env.CID_DATABASE_PASSWORD,
