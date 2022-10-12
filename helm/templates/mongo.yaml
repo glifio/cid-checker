@@ -26,7 +26,11 @@ spec:
       containers:
       - name: mongo
         image: "{{ .Values.services.mongo.image.repository }}:{{ .Values.services.mongo.image.tag | default "5.0.4" }}" 
-        imagePullPolicy: {{ .Values.services.mongo.image.pullPolicy }}
+        imagePullPolicy: "{{ .Values.services.mongo.image.pullPolicy }}"
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "yarn run migrate:production"]
         livenessProbe:
           tcpSocket:
             port: db
