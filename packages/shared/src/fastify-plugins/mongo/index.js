@@ -32,9 +32,7 @@ const init = async (app, config, done) => {
     await mongoose.connect(
       uri,
       {
-        useNewUrlParser: true,
         keepAlive: 1,
-        useUnifiedTopology: true,
         ...config.db.options
       }
     );
