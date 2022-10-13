@@ -13,8 +13,7 @@ CID_LOTUS_RPCURL="${CID_LOTUS_RPCURL:-$DEFAULT_LOTUS_RPC}"
 filePath=StateMarketDeals.json
 
 # Example: mongodb://login:pass@localhost:27017
-prefix='mongodb://'
-mongoURL=mongodb://${CID_DATABASE_USER}:${CID_DATABASE_PASSWORD}@${CID_DB_CONNECTIONSTRING#"$prefix"}
+mongoURL=${CID_DB_CONNECTIONSTRING}
 CID_DB_NAME="${CID_DB_NAME:-$DEFAULT_DB_NAME}"
 
 printf '[%s] Started processing state market deals\n' "$(date +%d-%m-%Y:%H:%M:%S)"

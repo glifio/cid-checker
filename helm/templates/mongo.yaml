@@ -26,20 +26,7 @@ spec:
       containers:
       - name: mongo
         image: "{{ .Values.services.mongo.image.repository }}:{{ .Values.services.mongo.image.tag | default "5.0.4" }}" 
-        imagePullPolicy: {{ .Values.services.mongo.image.pullPolicy }}
-        env:
-          - name: MONGO_INITDB_ROOT_USERNAME 
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "CID.fullname" . }}-secret
-                key: dbUsername
-                optional: false
-          - name: MONGO_INITDB_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "CID.fullname" . }}-secret
-                key: dbPassword
-                optional: false
+        imagePullPolicy: "{{ .Values.services.mongo.image.pullPolicy }}"
         livenessProbe:
           tcpSocket:
             port: db
