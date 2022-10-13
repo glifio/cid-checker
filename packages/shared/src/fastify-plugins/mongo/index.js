@@ -31,10 +31,7 @@ const init = async (app, config, done) => {
 
     await mongoose.connect(
       uri,
-      {
-        keepAlive: 1,
-        ...config.db.options
-      }
+      config.db.options
     );
 
     app.addHook('onRequest', (req, res, next) => {
@@ -44,6 +41,19 @@ const init = async (app, config, done) => {
     })
 
     app.decorate('db', { models })
+
+    app.addHook('onClose', () => {
+        mongoose.connection.close()
+        app.log.info('Mongodb connection closed')
+      }
+    )
+    // If the Node process ends, close the Mongoose connection
+    process.on('SIGINT', () => {
+      mongoose.connection.close(() => {
+        app.log.info('Mongoose default connection disconnected through app termination');
+        process.exit(0);
+      });
+    });
     // done()
   } catch (err) {
     // done(err)
