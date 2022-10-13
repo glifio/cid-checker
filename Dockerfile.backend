@@ -5,6 +5,8 @@ WORKDIR /app/
 COPY ./package.json ./
 COPY ./packages/backend/config ./packages/backend/config
 COPY ./packages/backend/src ./packages/backend/src
+COPY ./packages/backend/migrations ./packages/backend/migrations
+COPY ./packages/backend/migrate-mongo-config.js ./packages/backend/migrate-mongo-config.js
 COPY ./packages/backend/index.js ./packages/backend/package.json ./packages/backend/
 COPY ./packages/shared/package.json ./packages/shared/
 COPY ./packages/shared/src ./packages/shared/src

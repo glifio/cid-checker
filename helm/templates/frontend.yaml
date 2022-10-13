@@ -31,12 +31,15 @@ spec:
         - name: {{ .Chart.Name }}-frontend
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.services.frontend.image.repository }}:{{ .Values.services.frontend.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.services.frontend.image.repository }}:{{ .Chart.AppVersion }}-frontend"
           imagePullPolicy: {{ .Values.services.frontend.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
+          env:
+            - name: REACT_APP_REPOSITORY_URL
+              value: "https://github.com/glifio/cid-checker"
           livenessProbe:
             httpGet:
               path: /

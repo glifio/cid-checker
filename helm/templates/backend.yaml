@@ -31,8 +31,12 @@ spec:
         - name: {{ .Chart.Name }}-backend
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.services.backend.image.repository }}:{{ .Values.services.backend.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.services.backend.image.repository }}:{{ .Chart.AppVersion }}-backend"
           imagePullPolicy: {{ .Values.services.backend.image.pullPolicy }}
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "yarn run migrate:prod"]
           ports:
             - name: api
               containerPort: 3000
@@ -50,24 +54,14 @@ spec:
           env:
             - name: PORT
               value: "3000"
+            - name: APP_VERSION
+              value: "{{ .Chart.AppVersion }}"
             - name: CID_LOTUS_RPCURL
               value: "{{ .Values.lotusURL }}"
             - name: CID_DB_CONNECTIONSTRING
               value: "mongodb://{{ include "CID.fullname" . }}-mongo-service:27017"
             - name: CID_DB_NAME
               value: "{{ .Values.services.mongo.dbName }}"
-            - name: CID_DATABASE_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "CID.fullname" . }}-secret
-                  key: dbUsername  
-                  optional: false
-            - name: CID_DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "CID.fullname" . }}-secret
-                  key: dbPassword
-                  optional: false
       {{- range $key, $value := .Values.services.backend.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
