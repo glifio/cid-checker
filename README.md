@@ -1,3 +1,6 @@
+[ARCHIVED]
+The latest supported version is on https://github.com/protofire/filecoin-CID-checker
+
 # CID-CHECKER Docker image
 
 The image uses as part of the solution for the cid-checker collects data from the endpoint and provides it to the external DB.
